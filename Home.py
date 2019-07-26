@@ -6,4 +6,4 @@ from random import randint, sample
 from BasicFunc import BasicFunc
 from selenium import webdriver
 
-import vlc
+import vlc 

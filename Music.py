@@ -12,21 +12,22 @@ class Music(BasicFunc):
     def __init__(self,widget):
         super(Music, self).__init__(widget)
 
-        mypath = "/home/vxrich/Documenti/Workspace/Python/DobloDataUpdater/src/songs/"
+        self.mypath = "/home/vxrich/Documenti/CarPy-Multimedia-System/src/songs/"
         
 
         self.mixer = alsaaudio.Mixer()
 
         self.player = None
         self.random_status = 0
-        self.playlist = [f for f in os.listdir(mypath) if os.path.isfile(os.path.join(mypath, f))]
+        self.playlist = [f for f in os.listdir(self.mypath) if os.path.isfile(os.path.join(self.mypath, f))]
         self.index = 0
         self.indexes = [i for i in range(0, len(self.playlist))]
 
 
 
         self.list = QListWidget(widget)
-        self.list.setStyleSheet("background-color: blue;")
+        self.list.setGeometry(QRect(self.width/2-self.btnDim, self.height*0.07, self.btnDim*2, self.btnDim*2))
+        self.list.setStyleSheet("background-color: white; color: black;")
         for p in self.playlist:
             self.list.addItem(re.sub('\.mp3$', '',p))
         self.list.clicked.connect(self.onClickList)
@@ -110,8 +111,28 @@ class Music(BasicFunc):
 
     def onClickList(self):
         
-        song = self.list.selectedItems()
-        print(song)
+        song = self.list.currentItem().text()
+        self.album.show()
+        self.list.hide()
+
+        if self.player == None:
+
+            self.player = vlc.MediaPlayer(self.mypath + song + ".mp3")
+            self.song_title.setText(song)
+            self.play_pause_status = 1
+            self.play_pause.setIcon(QIcon("src/music/pause.png"))
+            self.player.play()  
+
+        else:
+
+            self.player.stop()
+            self.player = vlc.MediaPlayer(self.mypath + song + ".mp3")
+            self.song_title.setText(song)
+            self.play_pause_status = 1
+            self.play_pause.setIcon(QIcon("src/music/pause.png"))
+            self.player.play()        
+     
+            
 
 
     def onClickPlayPause(self):
@@ -121,7 +142,7 @@ class Music(BasicFunc):
             if self.random == 1:    
                 self.indexes = sample(range(0, len(self.playlist)), len(self.playlist))    
              
-            self.player = vlc.MediaPlayer("/home/vxrich/Documenti/Workspace/Python/DobloDataUpdater/src/songs/" + self.playlist[self.indexes[self.index]])
+            self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
             self.song_title.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
             self.player.play()
 
@@ -148,7 +169,7 @@ class Music(BasicFunc):
     def onClickPrevious(self):
 
         if self.player == None:
-            self.player = vlc.MediaPlayer("/home/vxrich/Documenti/Workspace/Python/DobloDataUpdater/src/songs/" + self.playlist[self.indexes[self.index]])
+            self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
         
         try:
             self.index -= 1
@@ -157,7 +178,7 @@ class Music(BasicFunc):
             self.index = 0
 
         self.player.stop()
-        self.player = vlc.MediaPlayer("/home/vxrich/Documenti/Workspace/Python/DobloDataUpdater/src/songs/" + self.playlist[self.indexes[self.index]])
+        self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
         self.song_title.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
         self.player.play()
 
@@ -165,7 +186,7 @@ class Music(BasicFunc):
     def onClickNext(self):
     
         if self.player == None:
-            self.player = vlc.MediaPlayer("/home/vxrich/Documenti/Workspace/Python/DobloDataUpdater/src/songs/" + self.playlist[self.indexes[self.index]])
+            self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
 
         try:
             self.index += 1
@@ -174,7 +195,7 @@ class Music(BasicFunc):
             self.index = 0
 
         self.player.stop()
-        self.player = vlc.MediaPlayer("/home/vxrich/Documenti/Workspace/Python/DobloDataUpdater/src/songs/" + self.playlist[self.indexes[self.index]])
+        self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
         self.song_title.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
         self.player.play()
 
@@ -229,5 +250,6 @@ class Music(BasicFunc):
     def onClickAlbum(self):
 
         self.list.show()
+        self.album.hide()
         
     
