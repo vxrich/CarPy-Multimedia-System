@@ -132,8 +132,6 @@ class Music(BasicFunc):
             self.play_pause.setIcon(QIcon("src/music/pause.png"))
             self.player.play()        
      
-            
-
 
     def onClickPlayPause(self):
     

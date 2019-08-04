@@ -13,7 +13,7 @@ class BasicFunc(object):
         self.width = widget.frameGeometry().width()
         self.height = widget.frameGeometry().height()
 
-        self.btnDim = self.width*0.10
+        self.btnDim = self.width*0.08
         self.space = self.height*0.05
 
     def delete(self):
@@ -23,3 +23,7 @@ class BasicFunc(object):
     def show(self):
         for element in self.elementList:
             element.show()
+
+    def hide(self):
+        for element in self.elementList:
+            element.hide()
