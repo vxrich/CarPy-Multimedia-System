@@ -14,7 +14,7 @@ class BasicFunc(object):
         self.height = widget.frameGeometry().height()
 
         self.btnDim = self.width*0.08
-        self.space = self.height*0.05
+        self.space = self.height*0.04
 
     def delete(self):
         for element in self.elementList:

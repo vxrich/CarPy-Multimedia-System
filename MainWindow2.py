@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QListWidget, QWidget, QLabel
 from PyQt5.QtCore import QRect, QMetaObject, QCoreApplication, Qt, QSize, QTimer, QDateTime
 from PyQt5.QtGui import QPalette, QTextLine, QIcon
-import sys, time
+import sys, time, os
 from Music import Music
 from Home import Home
 
@@ -59,6 +59,14 @@ class MainWindow(QMainWindow):
         self.timer.start(1000)
         
         #BUTTONS
+
+        self.shutdownBtn = QPushButton(QIcon("src/shutdown.png"), "", self.bottomBar)
+        self.shutdownBtn.setGeometry(QRect(0, 0, dim, dim))
+        self.shutdownBtn.setIconSize(QSize(dim, dim))
+        self.shutdownBtn.setObjectName("shutdown")
+        self.shutdownBtn.setStyleSheet("background-color: black; border-radius: 10px;")
+        self.shutdownBtn.clicked.connect(self.onClickShutdown)
+
         self.homeBtn = QPushButton(QIcon("src/home-pressed.png"), "", self.bottomBar)
         self.homeBtn.setGeometry(QRect((width-dim)/2-2*dim, 0, dim, dim))
         self.homeBtn.setIconSize(QSize(dim, dim))
@@ -171,6 +179,12 @@ class MainWindow(QMainWindow):
         self.current = self.settings
         """
         self.currentBtn = self.settingsBtn
+
+    def onClickShutdown(self):
+
+        self.shutdownBtn.setIcon(QIcon("src/shutdown-pressed.png"))
+
+        os.system("shutdown now")
 
     def changeTab(self):
 

@@ -26,22 +26,22 @@ class Music(BasicFunc):
 
 
         self.list = QListWidget(widget)
-        self.list.setGeometry(QRect(self.width/2-self.btnDim, self.height*0.07, self.btnDim*2, self.btnDim*2))
+        self.list.setGeometry(QRect((self.width-self.btnDim*2.2)/2, self.height*0.04, self.btnDim*2.2, self.btnDim*2.2))
         self.list.setStyleSheet("background-color: white; color: black;")
         for p in self.playlist:
             self.list.addItem(re.sub('\.mp3$', '',p))
         self.list.clicked.connect(self.onClickList)
         
         self.album  = QPushButton(QIcon("src/music/album.png"), "", widget)
-        self.album.setGeometry(QRect(self.width/2-self.btnDim, self.height*0.07, self.btnDim*2, self.btnDim*2))
-        self.album.setIconSize(QSize(self.btnDim*2,self.btnDim*2))
+        self.album.setGeometry(QRect((self.width-self.btnDim*2.2)/2, self.height*0.04, self.btnDim*2.2, self.btnDim*2.2))
+        self.album.setIconSize(QSize(self.btnDim*2.2,self.btnDim*2.2))
         self.album.clicked.connect(self.onClickAlbum)
         #self.album.setStyleSheet("background-color: white;")
 
         self.song_title = QLabel(widget)
-        self.song_title.setGeometry(QRect((self.width-self.width*0.7)/2, self.height/2 - self.btnDim*0.65, self.width*0.7, self.height *0.15))
+        self.song_title.setGeometry(QRect((self.width-self.width*0.5)/2, self.height/2 - self.btnDim*0.3, self.width*0.5, self.btnDim/3))
         self.song_title.setAlignment(Qt.AlignCenter)
-        self.song_title.setStyleSheet("font-size: 20px;")
+        self.song_title.setStyleSheet("font-size:" + str(int(self.btnDim/5)) + "px;")
 
         self.play_pause = QPushButton(QIcon("src/music/play-button.png"),"",widget)
         self.play_pause.setGeometry(QRect((self.width-self.btnDim)/2, self.height*0.6-self.btnDim/2, self.btnDim, self.btnDim))
@@ -87,7 +87,7 @@ class Music(BasicFunc):
         self.spotify.clicked.connect(self.onClickSpotify)
 
         self.progress = QProgressBar(self.widget)
-        self.progress.setGeometry((self.width-self.width*0.4)/2,self.height/2 + self.btnDim*2.4, self.width*0.40, self.height*0.07)
+        self.progress.setGeometry((self.width-self.width*0.4)/2,self.height/2 + self.btnDim*2.2, self.width*0.40, self.height*0.07)
         self.progress.setMaximum(100)
         self.progress.setMinimum(0)
         self.progress.setAlignment(Qt.AlignCenter)
