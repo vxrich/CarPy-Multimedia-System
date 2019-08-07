@@ -63,21 +63,21 @@ class MainWindow(QMainWindow):
         self.timer.start(1000)
         
         #BUTTONS
-        self.home = QPushButton(self.buttonBar)
-        self.home.setGeometry(QRect((width-dim)/2-2*dim, 0, dim, dim))
-        self.home.setObjectName("home")
-        self.home.setText("Home")
-        self.home.setStyleSheet(r'background-color: black; border-radius: 10px;')
-        self.home.clicked.connect(self.onClickHome)
+        self.homeBtn = QPushButton(QIcon("src/home-pressed.png"), "", self.buttonBar)
+        self.homeBtn.setGeometry(QRect((width-dim)/2-2*dim, 0, dim, dim))
+        self.homeBtn.setIconSize(QSize(dim, dim))
+        self.homeBtn.setObjectName("home")
+        self.homeBtn.setStyleSheet(r'background-color: black; border-radius: 10px;')
+        self.homeBtn.clicked.connect(self.onClickHome)
 
-        self.musicBtn = QPushButton(self.buttonBar)
+        self.musicBtn = QPushButton(QIcon("src/music.png"), "", self.buttonBar)
         self.musicBtn.setGeometry(QRect((width-dim)/2-dim, 0, dim, dim))
+        self.musicBtn.setIconSize(QSize(dim, dim))
         self.musicBtn.setObjectName("music")
-        self.musicBtn.setText("Music")
         self.musicBtn.setStyleSheet(r'background-color: black; border-radius: 10px;')
         self.musicBtn.clicked.connect(self.onClickMusic)
 
-        #Qui è come se ci fosse il pulsante dei gradi
+        #Qui è come se ci fosse la label dei gradi
 
         self.pushButton_3 = QPushButton(self.buttonBar)
         self.pushButton_3.setGeometry(QRect((width-dim)/2+dim, 0, dim, dim))
@@ -85,14 +85,16 @@ class MainWindow(QMainWindow):
         self.pushButton_3.setText("")
         self.pushButton_3.setStyleSheet(r'background-color: black; border-radius: 10px;')
 
-        self.settings = QPushButton(self.buttonBar)
-        self.settings.setGeometry(QRect((width-dim)/2+2*dim, 0, dim, dim))
-        self.settings.setObjectName("settings")
-        self.settings.setText("Settings")
-        self.settings.setStyleSheet(r'background-color: black ;border-radius: 10px;')
+        self.settingsBtn = QPushButton(QIcon("src/settings.png"), "", self.buttonBar)
+        self.settingsBtn.setGeometry(QRect((width-dim)/2+2*dim, 0, dim, dim))
+        self.settingsBtn.setIconSize(QSize(dim, dim))
+        self.settingsBtn.setObjectName("settings")
+        self.settingsBtn.setStyleSheet(r'background-color: black ;border-radius: 10px;')
+        self.settingsBtn.clicked.connect(self.onClickSettings)
 
         self.home = Home(self.widget)
         self.current = self.home
+        self.currentBtn = self.homeBtn
         self.music = None
         self.radio = None
 
@@ -109,7 +111,9 @@ class MainWindow(QMainWindow):
 
     def onClickHome(self):
 
-        self.current.hide()
+        self.changeTab()
+
+        self.homeBtn.setIcon(QIcon("src/home-pressed.png"))
 
         if self.home == None:
             self.home = Home(self.widget)
@@ -117,10 +121,13 @@ class MainWindow(QMainWindow):
             self.home.show()
 
         self.current = self.home
+        self.currentBtn = self.homeBtn
 
     def onClickMusic(self):
         
-        self.current.hide()
+        self.changeTab()
+
+        self.musicBtn.setIcon(QIcon("src/music-pressed.png"))
 
         if self.music == None:
             self.music = Music(self.widget)
@@ -128,6 +135,7 @@ class MainWindow(QMainWindow):
             self.music.show()
 
         self.current = self.music
+        self.currentBtn = self.musicBtn
 
     def onClickNav(self):
         self.widget.close()
@@ -136,8 +144,26 @@ class MainWindow(QMainWindow):
         self.widget.close()
     
     def onClickSettings(self):
-        self.widget.close()
-        
+
+        self.changeTab()
+
+        self.settingsBtn.setIcon(QIcon("src/settings-pressed.png"))
+        """
+        if self.settings == None:
+            self.settings = Music(self.widget)
+        else:
+            self.settings.show()
+
+        self.current = self.settings
+        """
+        self.currentBtn = self.settingsBtn
+
+    def changeTab(self):
+
+        self.current.hide()
+        btnIconPath = "src/" + self.currentBtn.objectName() + ".png"
+        self.currentBtn.setIcon(QIcon(btnIconPath))        
+
 
 
 if __name__ == "__main__":
