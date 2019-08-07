@@ -41,6 +41,7 @@ class Music(BasicFunc):
         self.song_title = QLabel(widget)
         self.song_title.setGeometry(QRect((self.width-self.width*0.7)/2, self.height/2 - self.btnDim*0.65, self.width*0.7, self.height *0.15))
         self.song_title.setAlignment(Qt.AlignCenter)
+        self.song_title.setStyleSheet("font-size: 20px;")
 
         self.play_pause = QPushButton(QIcon("src/music/play-button.png"),"",widget)
         self.play_pause.setGeometry(QRect((self.width-self.btnDim)/2, self.height*0.6-self.btnDim/2, self.btnDim, self.btnDim))

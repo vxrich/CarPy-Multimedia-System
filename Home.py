@@ -17,7 +17,7 @@ class Home(BasicFunc):
 
         self.innerWidget = QWidget(widget)
         self.innerWidget.setGeometry(QRect(100,100,400,400))
-        self.innerWidget.setStyleSheet("background-color:red;")
+        self.innerWidget.setStyleSheet("background-color:grey;")
 
         self.button = QPushButton("ciao", self.widget)
         self.button.setGeometry(QRect(self.btnDim,self.btnDim,self.btnDim,self.btnDim))
