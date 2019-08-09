@@ -17,6 +17,8 @@ class Music(BasicFunc):
 
         self.mixer = alsaaudio.Mixer()
 
+        vol = self.mixer.getvolume()
+
         self.player = None
         self.random_status = 0
         self.playlist = [f for f in os.listdir(self.mypath) if os.path.isfile(os.path.join(self.mypath, f))]
@@ -63,22 +65,28 @@ class Music(BasicFunc):
         self.previous.clicked.connect(self.onClickPrevious)
     
         self.random = QPushButton(QIcon("src/music/random.png"),"",widget)
-        self.random.setGeometry(QRect((self.width-self.btnDim)/2, self.btnDim +(self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
+        self.random.setGeometry(QRect((self.width-self.btnDim)/2+100, self.btnDim +(self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
         self.random.setIconSize(QSize(self.btnDim*0.5,self.btnDim*0.5))
         self.random.setObjectName("random")
         self.random.clicked.connect(self.onClickRandom)
 
-        self.volume_up = QPushButton(QIcon("src/music/volume-1.png"),"",widget)
+        self.volume_up = QPushButton(QIcon("src/music/plus.png"),"",widget)
         self.volume_up.setGeometry(QRect((self.width-self.btnDim)/2 + (self.space + self.btnDim), self.btnDim + (self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
-        self.volume_up.setIconSize(QSize(self.btnDim*0.7,self.btnDim*0.7))
+        self.volume_up.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
         self.volume_up.setObjectName("volume_up")
         self.volume_up.clicked.connect(self.onClickVolumeUp)
 
-        self.volume_down = QPushButton(QIcon("src/music/volume-1.png"),"",widget)
+        self.volume_down = QPushButton(QIcon("src/music/minus.png"),"",widget)
         self.volume_down.setGeometry(QRect((self.width-self.btnDim)/2 - (self.space + self.btnDim), self.btnDim + (self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
-        self.volume_down.setIconSize(QSize(self.btnDim*0.4,self.btnDim*0.4))
+        self.volume_down.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
         self.volume_down.setObjectName("volume_down")
         self.volume_down.clicked.connect(self.onClickVolumeDown)
+
+        self.mute = QPushButton("src/music/mute.png", "", widget)
+        self.mute.setGeometry(QRect((self.width-self.btnDim)/2, self.btnDim +(self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
+        self.mute.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
+        self.mute.setObjectName("mute")
+        self.mute.clicked.connect(self.onClickMute)
 
         self.spotify = QPushButton(QIcon("src/music/spotify.png"),"",widget)
         self.spotify.setGeometry(QRect(self.width*0.2, (self.height*0.75-self.btnDim/2), self.btnDim, self.btnDim))
@@ -102,6 +110,7 @@ class Music(BasicFunc):
         self.elementList.append(self.random)
         self.elementList.append(self.volume_down)
         self.elementList.append(self.volume_up)
+        self.elementList.append(self.mute)
         self.elementList.append(self.spotify)
         #self.elementList.append(self.list)
         #self.elementList.append(self.progress)
@@ -200,11 +209,10 @@ class Music(BasicFunc):
 
 
     def onClickVolumeDown(self):
-        
-        vol = self.mixer.getvolume()
 
         if vol[0] > 0:
-            self.mixer.setvolume(vol[0]-1)
+            vol[0] -= 1
+            self.mixer.setvolume(vol[0])
 
         self.progress.setStyleSheet("background-color: #1f2021;")
         self.progress.setValue(vol[0]-1)
@@ -219,10 +227,9 @@ class Music(BasicFunc):
 
     def onClickVolumeUp(self):
 
-        vol = self.mixer.getvolume()
-
         if vol[0] < 100:
-            self.mixer.setvolume(vol[0]+1)
+            vol[0] += 1
+            self.mixer.setvolume(vol[0])
 
         self.progress.setStyleSheet("background-color: #1f2021;")
         self.progress.setValue(vol[0]+1)
@@ -233,6 +240,12 @@ class Music(BasicFunc):
         loop.exec_()
         
         self.progress.hide()
+
+    def onClickMute(self):
+
+        vol[0] = 0
+
+
 
 
     def onClickSpotify(self):

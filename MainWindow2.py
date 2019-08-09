@@ -82,7 +82,6 @@ class MainWindow(QMainWindow):
         self.temperatureBtn = QPushButton(self.bottomBar)
         self.temperatureBtn.setGeometry(QRect((width-dim)/2,0,dim,dim))
         self.temperatureBtn.setObjectName("temperature")
-        self.temperatureBtn.setStyleSheet("background-color: grey;")
         self.temperatureBtn.setStyleSheet("font-size:" + str(int(dim/3)) + "px;")
 
         self.notesBtn = QPushButton(QIcon("src/menu/notes.png"), "", self.bottomBar)
