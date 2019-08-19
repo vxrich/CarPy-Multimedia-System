@@ -17,7 +17,7 @@ class Music(BasicFunc):
 
         self.mixer = alsaaudio.Mixer()
 
-        vol = self.mixer.getvolume()
+        self.vol = self.mixer.getvolume()
 
         self.player = None
         self.random_status = 0
@@ -65,7 +65,7 @@ class Music(BasicFunc):
         self.previous.clicked.connect(self.onClickPrevious)
     
         self.random = QPushButton(QIcon("src/music/random.png"),"",widget)
-        self.random.setGeometry(QRect((self.width-self.btnDim)/2+100, self.btnDim +(self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
+        self.random.setGeometry(QRect((self.width-self.btnDim)/2, self.btnDim +(self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
         self.random.setIconSize(QSize(self.btnDim*0.5,self.btnDim*0.5))
         self.random.setObjectName("random")
         self.random.clicked.connect(self.onClickRandom)
@@ -82,11 +82,13 @@ class Music(BasicFunc):
         self.volume_down.setObjectName("volume_down")
         self.volume_down.clicked.connect(self.onClickVolumeDown)
 
+        """
         self.mute = QPushButton("src/music/mute.png", "", widget)
         self.mute.setGeometry(QRect((self.width-self.btnDim)/2, self.btnDim +(self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
         self.mute.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
         self.mute.setObjectName("mute")
         self.mute.clicked.connect(self.onClickMute)
+        """
 
         self.spotify = QPushButton(QIcon("src/music/spotify.png"),"",widget)
         self.spotify.setGeometry(QRect(self.width*0.2, (self.height*0.75-self.btnDim/2), self.btnDim, self.btnDim))
@@ -110,8 +112,8 @@ class Music(BasicFunc):
         self.elementList.append(self.random)
         self.elementList.append(self.volume_down)
         self.elementList.append(self.volume_up)
-        self.elementList.append(self.mute)
         self.elementList.append(self.spotify)
+        #self.elementList.append(self.mute)
         #self.elementList.append(self.list)
         #self.elementList.append(self.progress)
         
@@ -210,12 +212,15 @@ class Music(BasicFunc):
 
     def onClickVolumeDown(self):
 
-        if vol[0] > 0:
-            vol[0] -= 1
-            self.mixer.setvolume(vol[0])
+        if self.mixer.getmute() == 1:
+            self.mixer.setmute(0)
+
+        if self.vol[0] > 0:
+            self.vol[0] -= 1
+            self.mixer.setvolume(self.vol[0])
 
         self.progress.setStyleSheet("background-color: #1f2021;")
-        self.progress.setValue(vol[0]-1)
+        self.progress.setValue(self.vol[0])
         self.progress.show()
         
         loop = QEventLoop()
@@ -227,12 +232,15 @@ class Music(BasicFunc):
 
     def onClickVolumeUp(self):
 
-        if vol[0] < 100:
-            vol[0] += 1
-            self.mixer.setvolume(vol[0])
+        if self.mixer.getmute() == 1:
+            self.mixer.setmute(0)
+
+        if self.vol[0] < 100:
+            self.vol[0] += 1
+            self.mixer.setvolume(self.vol[0])
 
         self.progress.setStyleSheet("background-color: #1f2021;")
-        self.progress.setValue(vol[0]+1)
+        self.progress.setValue(self.vol[0])
         self.progress.show()
         
         loop = QEventLoop()
@@ -243,7 +251,10 @@ class Music(BasicFunc):
 
     def onClickMute(self):
 
-        vol[0] = 0
+        if self.mixer.getmute() == 0:
+            self.mixer.setmute(1)
+        else:
+            self.mixer.setmute(0)
 
 
 
