@@ -7,7 +7,7 @@ scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/aut
 creds = ServiceAccountCredentials.from_json_keyfile_name(key_path, scope)
 client = gspread.authorize(creds)
 
-sheet = client.open('Consumi Doblò').sheet1
+sheet = client.open('ProvaPython').sheet1
 
 pp = pprint.PrettyPrinter()
 
@@ -16,6 +16,8 @@ while sheet.cell(row,1).value != '':
     row += 1
 
 print(row)
+
+sheet.update_cell(row, 1, "25/08/2019")
 
 
 class Spreadsheet(object):
@@ -28,9 +30,16 @@ class Spreadsheet(object):
 
         self.sheet = client.open(sheet_name).sheet1
 
+        self.current_row = None
 
-    def setValue(self, column):
-        return 0
+
+    def setValue(self, column, value):
+
+        self.sheet.update_cell(self.current_row, column, value)
+
+    def getvalue(self, row, column):
+
+        return self.sheet.cell(row, column).value
 
     def selectNewRow(self):
 
@@ -39,7 +48,10 @@ class Spreadsheet(object):
         while self.sheet.cell(i,1).value != '':
             row += 1
 
-        return row
+        self.current_row = row
+        
+
+
 
 
 

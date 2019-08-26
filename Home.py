@@ -23,10 +23,10 @@ class Home(BasicFunc):
         self.button.setGeometry(QRect(self.btnDim,self.btnDim,self.btnDim,self.btnDim))
         self.button.setStyleSheet("background-color: white; color: black;")
 
-        self.gauge = Gauge(self.frame)
+        #self.gauge = Gauge(self.frame)
 
         self.elementList.append(self.button)
-        self.elementList.append(self.gauge)
+        #self.elementList.append(self.gauge)
         self.elementList.append(self.innerWidget)
         self.elementList.append(self.frame)
 

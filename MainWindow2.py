@@ -4,6 +4,7 @@ from PyQt5.QtGui import QPalette, QTextLine, QIcon
 import sys, time, os
 from Music import Music
 from Home import Home
+from Note import Note
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -84,7 +85,7 @@ class MainWindow(QMainWindow):
         self.temperatureBtn.setObjectName("temperature")
         self.temperatureBtn.setStyleSheet("font-size:" + str(int(dim/3)) + "px;")
 
-        self.notesBtn = QPushButton(QIcon("src/menu/notes.png"), "", self.bottomBar)
+        self.notesBtn = QPushButton(QIcon("src/menu/note.png"), "", self.bottomBar)
         self.notesBtn.setGeometry(QRect((width-dim)/2+dim, 0, dim, dim))
         self.notesBtn.setIconSize(QSize(icon_dim,icon_dim))
         self.notesBtn.setObjectName("notes")
@@ -103,6 +104,7 @@ class MainWindow(QMainWindow):
         self.currentBtn = self.homeBtn
         self.music = None
         self.radio = None
+        self.note = None
 
         #Posizionando qui questo comando invece che nel "main" non inserisce i pulsanti della SecondUi
         #self.showFullScreen()
@@ -151,15 +153,15 @@ class MainWindow(QMainWindow):
 
         self.changeTab()
 
-        self.notesBtn.setIcon(QIcon("src/menu/notes-pressed.png"))
-        """
-        if self.notes == None:
-            self.notes = Notes(self.widget)
+        self.notesBtn.setIcon(QIcon("src/menu/note-pressed.png"))
+        
+        if self.note == None:
+            self.note = Note(self.widget)
         else:
-            self.notes.show()
+            self.note.show()
 
-        self.current = self.notes
-        """
+        self.current = self.note
+        
         self.currentBtn = self.notesBtn
     
     def onClickSettings(self):

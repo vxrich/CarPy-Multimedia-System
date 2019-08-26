@@ -1,14 +1,13 @@
 COMANDI DA IMPLEMENTARE
-- Musica
+X Musica
 - Navigatore
 - Dati auto
 - Dati rifornimento
 - Impostazioni
 
-MUSICA e RADIO
+RADIO
 - Inserire pulsanti con immagine 
 - Sistema Radio 
-- Collegamento a App Spotify
 
 
 Credits for button:
@@ -16,4 +15,3 @@ Anton Saputro
 Chanut
 
 RISOLUZIONE ERRORI:
-Se si presenta l'errore pygame.error: No available audio device

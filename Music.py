@@ -96,8 +96,9 @@ class Music(BasicFunc):
         self.spotify.setObjectName("spotofy")
         self.spotify.clicked.connect(self.onClickSpotify)
 
-        self.progress = QProgressBar(self.widget)
+        self.progress = QProgressBar(widget)
         self.progress.setGeometry((self.width-self.width*0.4)/2,self.height/2 + self.btnDim*2.2, self.width*0.40, self.height*0.07)
+        self.progress.setStyleSheet("background-color: #1f2021;")
         self.progress.setMaximum(100)
         self.progress.setMinimum(0)
         self.progress.setAlignment(Qt.AlignCenter)
@@ -219,7 +220,6 @@ class Music(BasicFunc):
             self.vol[0] -= 1
             self.mixer.setvolume(self.vol[0])
 
-        self.progress.setStyleSheet("background-color: #1f2021;")
         self.progress.setValue(self.vol[0])
         self.progress.show()
         
@@ -239,7 +239,6 @@ class Music(BasicFunc):
             self.vol[0] += 1
             self.mixer.setvolume(self.vol[0])
 
-        self.progress.setStyleSheet("background-color: #1f2021;")
         self.progress.setValue(self.vol[0])
         self.progress.show()
         
