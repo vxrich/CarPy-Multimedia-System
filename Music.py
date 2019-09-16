@@ -265,9 +265,13 @@ class Music(BasicFunc):
         else:
             self.player.stop()
 
+        self.spotify.setIcon(QIcon("src/music/spotify-pressed.png"))
+
         driver = webdriver.Chrome()
         driver.fullscreen_window()
         driver.get('https://open.spotify.com')
+
+        self.spotify.setIcon(QIcon("src/music/spotify.png"))
 
     def onClickAlbum(self):
 

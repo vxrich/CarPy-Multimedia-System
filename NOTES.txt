@@ -1,5 +1,5 @@
 COMANDI DA IMPLEMENTARE
-X Musica
+- Musica
 - Navigatore
 - Dati auto
 - Dati rifornimento
@@ -8,6 +8,9 @@ X Musica
 RADIO
 - Inserire pulsanti con immagine 
 - Sistema Radio 
+
+MUSICA
+- Programmare comportamento lista canzoni album
 
 
 Credits for button:
