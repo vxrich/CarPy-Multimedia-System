@@ -256,8 +256,6 @@ class Music(BasicFunc):
             self.mixer.setmute(0)
 
 
-
-
     def onClickSpotify(self):
 
         if self.player == 0:

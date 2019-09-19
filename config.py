@@ -1,7 +1,9 @@
-key_path = "/home/vxrich/Scaricati/client_secret.json"
-sheet_name = "Consumi Doblò"
+KEY_PATH = "/home/vxrich/Scaricati/client_secret.json"
+SHEET_NAME = "Consumi Doblò"
+SHEET = "ProvaPython"
 
-fuel_row = 2
-cost_row = 3
-travel_row = 5
-consumption_row = 8
+DATE_COL = 1
+FUEL_COL = 2
+COST_COL = 3
+TRAVEL_COL = 5
+CONSUMPTION_COL = 8
