@@ -15,16 +15,17 @@ class Note(BasicFunc):
 
         self.keyLayout = QGridLayout()
         self.textLayout = QGridLayout()
-
+        
         self.keyboardWidget = QWidget(widget)
         self.keyboardWidget.setGeometry(QRect(self.height*0.05, self.height*0.05, self.width/3, self.height*0.9))
-        self.keyboardWidget.setStyleSheet("background-color: #71787a; color: white;")
+        #self.keyboardWidget.setStyleSheet("background-color: #71787a; color: white;")
         self.keyboardWidget.setLayout(self.keyLayout)
-
+        
         self.textWidget = QWidget(widget)
         self.textWidget.setGeometry(QRect(2*self.height*0.05 + self.width/3, self.height*0.05, 2*self.width/3 - self.height*0.15, self.height*0.9))
-        self.textWidget.setStyleSheet("background-color: #71787a;")
+        #self.textWidget.setStyleSheet("background-color: #71787a;")
         self.textWidget.setLayout(self.textLayout)
+        
 
         #----------BUTTONS--------------
 
@@ -40,6 +41,7 @@ class Note(BasicFunc):
         btnStyle = "background-color: black; font-size:" + str(int(btnDim*0.5)) + "px;"
 
         uploadBtnStyle = "background-color: black; font-size:" + str(int(btnDim*0.2)) + "px;"
+        uploadGreenBtnStyle = "background-color: #17fc03; color: black; font-size:" + str(int(btnDim*0.2)) + "px;"
         
         self.buttons = [QPushButton(str(i)) for i in range(10)]
         position = [ [i,j] for i in range(3) for j in range(3)]
@@ -151,14 +153,16 @@ class Note(BasicFunc):
 
         self.elementList.append(self.keyboardWidget)
         self.elementList.append(self.textWidget)
-        self.elementList.append(self.fuel)
-        self.elementList.append(self.cost)
-        self.elementList.append(self.upload)
 
         self.index = 0
         self.lineGroup[self.index].setFocus()
 
         self.show()
+        
+        try:
+            self.spreadSheet = Spreadsheet()
+        except httplib2.ServerNotFoundError:
+            print("errore")  
 
     def onClickButton(self, btn):
 
@@ -186,13 +190,16 @@ class Note(BasicFunc):
     def onClickUpload(self):
 
         try:
-            spreadSheet = Spreadsheet()
-            spreadSheet.setNewRecord(self.date.text(), self.fuel.text(), self.cost.text(), self.kilometers.text())
+            inizio = time.time()
+            self.spreadSheet.setNewRecord(self.date.text(), self.fuel.text(), self.cost.text(), self.kilometers.text())
+            fine = time.time()
+            print(fine-inizio)
             self.cleanAllText()
+            #self.upload.setStyleSheet(uploadGreenBtnStyle)
+            #time.sleep(2)
+            #self.upload.setStyleSheet(uploadBtnStyle)
         except httplib2.ServerNotFoundError:
-            print ("------------------SERVER NON TROVATO-----------------")
-
-        
+            print("errore")            
 
     def cleanAllText(self):
 

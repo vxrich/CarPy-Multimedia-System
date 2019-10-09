@@ -25,7 +25,9 @@ class Music(BasicFunc):
         self.index = 0
         self.indexes = [i for i in range(0, len(self.playlist))]
 
-
+        self.musicWidget = QWidget(widget)
+        self.musicWidget.setGeometry(QRect(widget.width()/4,0, widget.width()/2, widget.height()))
+        #self.musicWidget.setStyleSheet("background-color: white;")
 
         self.list = QListWidget(widget)
         self.list.setGeometry(QRect((self.width-self.btnDim*2.2)/2, self.height*0.04, self.btnDim*2.2, self.btnDim*2.2))
@@ -40,17 +42,17 @@ class Music(BasicFunc):
         self.album.clicked.connect(self.onClickAlbum)
         #self.album.setStyleSheet("background-color: white;")
 
-        self.song_title = QLabel(widget)
-        self.song_title.setGeometry(QRect((self.width-self.width*0.5)/2, self.height/2 - self.btnDim*0.3, self.width*0.5, self.btnDim/3))
-        self.song_title.setAlignment(Qt.AlignCenter)
-        self.song_title.setStyleSheet("font-size:" + str(int(self.btnDim/5)) + "px;")
+        self.songTitle = QLabel(widget)
+        self.songTitle.setGeometry(QRect((self.width-self.width*0.5)/2, self.height/2 - self.btnDim*0.3, self.width*0.5, self.btnDim/3))
+        self.songTitle.setAlignment(Qt.AlignCenter)
+        self.songTitle.setStyleSheet("font-size:" + str(int(self.btnDim/5)) + "px;")
 
-        self.play_pause = QPushButton(QIcon("src/music/play-button.png"),"",widget)
-        self.play_pause.setGeometry(QRect((self.width-self.btnDim)/2, self.height*0.6-self.btnDim/2, self.btnDim, self.btnDim))
-        self.play_pause.setIconSize(QSize(self.btnDim,self.btnDim))
-        self.play_pause.setObjectName("play")
+        self.playPause = QPushButton(QIcon("src/music/play-button.png"),"",widget)
+        self.playPause.setGeometry(QRect((self.width-self.btnDim)/2, self.height*0.6-self.btnDim/2, self.btnDim, self.btnDim))
+        self.playPause.setIconSize(QSize(self.btnDim,self.btnDim))
+        self.playPause.setObjectName("play")
         self.play_pause_status = 0
-        self.play_pause.clicked.connect(self.onClickPlayPause)
+        self.playPause.clicked.connect(self.onClickPlayPause)
 
         self.next = QPushButton(QIcon("src/music/next.png"),"",widget)
         self.next.setGeometry(QRect((self.width-self.btnDim)/2 + (self.space + self.btnDim), self.height*0.6-self.btnDim/2, self.btnDim, self.btnDim))
@@ -70,17 +72,17 @@ class Music(BasicFunc):
         self.random.setObjectName("random")
         self.random.clicked.connect(self.onClickRandom)
 
-        self.volume_up = QPushButton(QIcon("src/music/plus.png"),"",widget)
-        self.volume_up.setGeometry(QRect((self.width-self.btnDim)/2 + (self.space + self.btnDim), self.btnDim + (self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
-        self.volume_up.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
-        self.volume_up.setObjectName("volume_up")
-        self.volume_up.clicked.connect(self.onClickVolumeUp)
+        self.volumeUp = QPushButton(QIcon("src/music/plus.png"),"",widget)
+        self.volumeUp.setGeometry(QRect((self.width-self.btnDim)/2 + (self.space + self.btnDim), self.btnDim + (self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
+        self.volumeUp.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
+        self.volumeUp.setObjectName("volume_up")
+        self.volumeUp.clicked.connect(self.onClickVolumeUp)
 
-        self.volume_down = QPushButton(QIcon("src/music/minus.png"),"",widget)
-        self.volume_down.setGeometry(QRect((self.width-self.btnDim)/2 - (self.space + self.btnDim), self.btnDim + (self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
-        self.volume_down.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
-        self.volume_down.setObjectName("volume_down")
-        self.volume_down.clicked.connect(self.onClickVolumeDown)
+        self.volumeDown = QPushButton(QIcon("src/music/minus.png"),"",widget)
+        self.volumeDown.setGeometry(QRect((self.width-self.btnDim)/2 - (self.space + self.btnDim), self.btnDim + (self.height*0.6-self.btnDim/2), self.btnDim, self.btnDim))
+        self.volumeDown.setIconSize(QSize(self.btnDim*0.6,self.btnDim*0.6))
+        self.volumeDown.setObjectName("volume_down")
+        self.volumeDown.clicked.connect(self.onClickVolumeDown)
 
         """
         self.mute = QPushButton("src/music/mute.png", "", widget)
@@ -93,7 +95,7 @@ class Music(BasicFunc):
         self.spotify = QPushButton(QIcon("src/music/spotify.png"),"",widget)
         self.spotify.setGeometry(QRect(self.width*0.2, (self.height*0.75-self.btnDim/2), self.btnDim, self.btnDim))
         self.spotify.setIconSize(QSize(self.btnDim*0.4,self.btnDim*0.4))
-        self.spotify.setObjectName("spotofy")
+        self.spotify.setObjectName("spotify")
         self.spotify.clicked.connect(self.onClickSpotify)
 
         self.progress = QProgressBar(widget)
@@ -103,16 +105,16 @@ class Music(BasicFunc):
         self.progress.setMinimum(0)
         self.progress.setAlignment(Qt.AlignCenter)
 
-        
+        self.elementList.append(self.musicWidget)
         self.elementList.append(self.list)
         self.elementList.append(self.album)
-        self.elementList.append(self.song_title)
-        self.elementList.append(self.play_pause)
+        self.elementList.append(self.songTitle)
+        self.elementList.append(self.playPause)
         self.elementList.append(self.next)
         self.elementList.append(self.previous)
         self.elementList.append(self.random)
-        self.elementList.append(self.volume_down)
-        self.elementList.append(self.volume_up)
+        self.elementList.append(self.volumeDown)
+        self.elementList.append(self.volumeUp)
         self.elementList.append(self.spotify)
         #self.elementList.append(self.mute)
         #self.elementList.append(self.list)
@@ -131,18 +133,18 @@ class Music(BasicFunc):
         if self.player == None:
 
             self.player = vlc.MediaPlayer(self.mypath + song + ".mp3")
-            self.song_title.setText(song)
+            self.songTitle.setText(song)
             self.play_pause_status = 1
-            self.play_pause.setIcon(QIcon("src/music/pause.png"))
+            self.playPause.setIcon(QIcon("src/music/pause.png"))
             self.player.play()  
 
         else:
 
             self.player.stop()
             self.player = vlc.MediaPlayer(self.mypath + song + ".mp3")
-            self.song_title.setText(song)
+            self.songTitle.setText(song)
             self.play_pause_status = 1
-            self.play_pause.setIcon(QIcon("src/music/pause.png"))
+            self.playPause.setIcon(QIcon("src/music/pause.png"))
             self.player.play()        
      
 
@@ -154,16 +156,16 @@ class Music(BasicFunc):
                 self.indexes = sample(range(0, len(self.playlist)), len(self.playlist))    
              
             self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
-            self.song_title.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
+            self.songTitle.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
             self.player.play()
 
         if self.play_pause_status == 0:
             self.play_pause_status = 1
-            self.play_pause.setIcon(QIcon("src/music/pause.png"))
+            self.playPause.setIcon(QIcon("src/music/pause.png"))
             self.player.play()        
         else:
             self.play_pause_status = 0
-            self.play_pause.setIcon(QIcon("src/music/play-button.png"))
+            self.playPause.setIcon(QIcon("src/music/play-button.png"))
             self.player.pause()
         
 
@@ -190,7 +192,7 @@ class Music(BasicFunc):
 
         self.player.stop()
         self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
-        self.song_title.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
+        self.songTitle.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
         self.player.play()
 
 
@@ -207,7 +209,7 @@ class Music(BasicFunc):
 
         self.player.stop()
         self.player = vlc.MediaPlayer(self.mypath + self.playlist[self.indexes[self.index]])
-        self.song_title.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
+        self.songTitle.setText(re.sub('\.mp3$', '', self.playlist[self.indexes[self.index]]))
         self.player.play()
 
 
@@ -258,7 +260,7 @@ class Music(BasicFunc):
 
     def onClickSpotify(self):
 
-        if self.player == 0:
+        if self.player == None:
             pass
         else:
             self.player.stop()
