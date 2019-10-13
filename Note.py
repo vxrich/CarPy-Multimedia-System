@@ -190,10 +190,7 @@ class Note(BasicFunc):
     def onClickUpload(self):
 
         try:
-            inizio = time.time()
             self.spreadSheet.setNewRecord(self.date.text(), self.fuel.text(), self.cost.text(), self.kilometers.text())
-            fine = time.time()
-            print(fine-inizio)
             self.cleanAllText()
             #self.upload.setStyleSheet(uploadGreenBtnStyle)
             #time.sleep(2)
