@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QLineEdit, QMainWindow, QApplication, QPushButton, QListWidget, QWidget, QLabel
-from PyQt5.QtCore import QRect, QMetaObject, QCoreApplication, Qt, QSize, QTimer, QDateTime
-from PyQt5.QtGui import QPalette, QTextLine, QIcon
+from PyQt5.QtCore import QRect, QMetaObject, QCoreApplication, Qt, QSize, QTimer, QDateTime, QPoint, QRectF
+from PyQt5.QtGui import QPalette, QTextLine, QIcon, QPainter, QPen, QColor
 import sys, time, os
 from Music import Music
 from Home import Home
@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
         
 
         self.timer = QTimer(self)
-        self.timer.timeout.connect(self.updateTime)
+        self.timer.timeout.connect(self._updateTime)
         self.timer.start(1000)
         
         #-----------BUTTONS-----------
@@ -109,7 +109,7 @@ class MainWindow(QMainWindow):
         #Posizionando qui questo comando invece che nel "main" non inserisce i pulsanti della SecondUi
         #self.showFullScreen()
 
-    def updateTime(self):
+    def _updateTime(self):
 
         current = QDateTime.currentDateTime()
         date = current.date()
